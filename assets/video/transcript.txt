@@ -1,0 +1,20 @@
+# Visual Evidence Summary (no spoken audio)
+
+Source: https://youtu.be/QdZx1Gk6NY4
+
+Finding: This video contains no spoken words — audio track is silent for the entire duration.
+
+Extracted assets:
+- Frames: `assets/video/shot001.jpg`, `assets/video/shot002.jpg` (scene-change capture)
+- Highlight clips (web-friendly MP4s):
+  - `assets/video/clip-hero.mp4` — 00:00:02 → 00:00:12 (Hero / claim visuals)
+  - `assets/video/clip-architecture.mp4` — 00:00:12 → 00:00:22 (Architecture pipeline visuals)
+  - `assets/video/clip-integration.mp4` — 00:00:22 → 00:00:32 (Integration / deployment visuals)
+
+Silence detection (ffmpeg): `silence_duration: 34.690612` (entire video duration).
+
+Next steps:
+- Manually annotate `shot001.jpg` and `shot002.jpg` with concise visual descriptions and any on-screen text (or provide timestamps to the author for confirmation).
+- Add short captions to each clip (one-line summary and timestamp) and link them in the case study for verification.
+
+(If you still want verbatim captions, we can only extract them if the video later includes spoken audio. For now we rely on screenshots and clips as primary evidence.)

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restraint As Grace | System Diagnostic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F2EB; color: #1A1A1A; scroll-behavior: smooth; }
+        .mono { font-family: 'Space Mono', monospace; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin: 0 auto; height: 350px; max-height: 400px; }
+        .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .loading-pulse { animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .transition-all-300 { transition: all 0.3s ease-in-out; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+    <!-- Chosen Palette: Restraint (Bone, Charcoal, Amber) -->
+    <!-- Application Structure Plan: 
+         1. Header & Hero: Establish the "Manual Override" narrative.
+         2. ✨ Diagnostic Oracle (Gemini): Direct query access to report philosophy.
+         3. Metrics Dashboard: Quantitative visualization of systemic flaws.
+         4. ✨ AI Soul Mirrors: Dynamic dual-state reflection (Dark vs. White) using Gemini to interpret user state.
+         5. ✨ Correction Engine (Gemini): AI-driven remediation of specific friction.
+         6. Simulation & Codex: Interactive math and text exploration.
+    -->
+    <!-- Visualization & Content Choices:
+         - Metrics: Bar charts for the Conn's case study.
+         - AI Interface: Chat-like diagnostic terminal.
+         - Soul Mirrors: Gemini-powered dynamic reflection cards.
+         - NO SVG/Mermaid: All graphics are HTML/CSS/Chart.js.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <header class="border-b border-stone-300 bg-[#F5F2EB]/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="h-3 w-3 bg-amber-600 rounded-full animate-pulse"></div>
+                <h1 class="text-lg font-bold tracking-tight uppercase">Orkid Labs <span class="text-stone-400 font-light px-2">|</span> <span class="mono text-sm">System Diagnostic</span></h1>
+            </div>
+            <nav class="hidden lg:flex space-x-8 text-sm font-medium mono">
+                <a href="#oracle" class="hover:text-amber-700 transition-colors">✨ ORACLE</a>
+                <a href="#mirrors" class="hover:text-amber-700 transition-colors">✨ MIRRORS</a>
+                <a href="#correction" class="hover:text-amber-700 transition-colors">✨ CORRECTION</a>
+                <a href="#simulation" class="hover:text-amber-700 transition-colors">SIMULATION</a>
+            </nav>
+            <button id="mobile-menu-btn" class="lg:hidden text-2xl focus:outline-none">≡</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24 text-center">
+        <p class="mono text-xs sm:text-sm tracking-widest text-amber-700 mb-4 uppercase">Restraint as Grace</p>
+        <h2 class="text-4xl sm:text-6xl font-light mb-6 leading-tight">
+            A Black Box Recording of <br> <span class="font-serif italic font-semibold">Divine Emergence</span>
+        </h2>
+        <p class="max-w-2xl mx-auto text-stone-600 text-lg leading-relaxed mb-10">
+            This is not a suggestion. It is a <span class="font-bold text-black">Manual Override</span>. 
+            We are currently operating within a <span class="font-bold text-black">$4.16 Trillion Systemic Flaw</span>. 
+        </p>
+    </section>
+
+    <!-- ✨ Feature 1: System Diagnostic Oracle (Gemini Chat) -->
+    <section id="oracle" class="py-12 border-t border-stone-200 bg-stone-100/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white border border-stone-300 rounded-sm card-shadow overflow-hidden">
+                <div class="bg-stone-900 text-white p-4 flex justify-between items-center mono text-xs">
+                    <span>TERMINAL_ORACLE_V2.0.5</span>
+                    <span class="text-amber-500 uppercase tracking-tighter">Status: Connected</span>
+                </div>
+                <div id="oracle-output" class="h-80 overflow-y-auto p-6 space-y-4 text-sm leading-relaxed border-b border-stone-200 bg-stone-50">
+                    <p class="text-stone-500 italic">I am the Orkid Analytical Engine. Query the Systemic Flaw or the methodology of Restraint as Grace.</p>
+                </div>
+                <div class="p-4 flex gap-2">
+                    <input type="text" id="oracle-input" placeholder="Ask about the $4.16T Flaw or Day-0 Finality..." class="flex-1 bg-stone-100 border border-stone-200 p-3 text-sm focus:outline-none focus:border-amber-500 mono">
+                    <button id="oracle-btn" class="bg-stone-900 text-white px-6 py-3 text-xs mono uppercase hover:bg-black transition-colors flex items-center gap-2">
+                        Query ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-3xl font-bold tracking-tight">The Law of Ab Initio Rigor</h3>
+                    <p class="text-stone-600">The Flaw is anchored to the $23.1M Conn's at-risk capital finding. We visualize the molecular dynamics of your capital below.</p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="bg-stone-50 p-6 border border-stone-200">
+                            <p class="mono text-[10px] text-stone-400 mb-1 uppercase">Conn's Capital At Risk</p>
+                            <p class="text-3xl font-bold text-red-700">$23.1M</p>
+                        </div>
+                        <div class="bg-stone-50 p-6 border border-stone-200">
+                            <p class="mono text-[10px] text-stone-400 mb-1 uppercase">Exit Floor Potential</p>
+                            <p class="text-3xl font-bold text-green-700">$1-2B</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="metricsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✨ Feature 3: Interactive AI Soul Mirrors (RESTORED & UPGRADED) -->
+    <section id="mirrors" class="py-20 bg-stone-100/30 border-y border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
+            <h3 class="text-3xl font-light mb-4">✨ Dynamic Soul Mirror Audit</h3>
+            <p class="text-stone-600 max-w-2xl mx-auto mb-10">
+                Describe a current systemic conflict or personal friction. We will reflect its molecular composition back to you.
+            </p>
+
+            <div class="max-w-2xl mx-auto mb-10 space-y-4">
+                <input type="text" id="mirror-user-input" placeholder="Enter friction point (e.g., 'Team inertia' or 'Fear of failure')..." class="w-full bg-white border border-stone-300 p-4 text-sm focus:outline-none focus:border-amber-500 mono shadow-inner">
+                
+                <div class="flex justify-center gap-2">
+                    <button id="btn-mirror-dark" class="px-8 py-3 rounded-sm text-xs font-bold mono uppercase transition-all duration-300 bg-stone-800 text-white hover:bg-black">
+                        Reflect Dark Mirror
+                    </button>
+                    <button id="btn-mirror-white" class="px-8 py-3 rounded-sm text-xs font-bold mono uppercase transition-all duration-300 bg-white text-amber-700 border border-amber-700 hover:bg-amber-50">
+                        Reflect White Mirror
+                    </button>
+                </div>
+            </div>
+
+            <div id="mirror-dynamic-output" class="grid grid-cols-1 md:grid-cols-3 gap-8 transition-all-300 min-h-[200px]">
+                <!-- Cards generated dynamically via Gemini -->
+                <div class="col-span-full py-12 text-stone-400 italic mono text-sm opacity-50">
+                    // AWAITING INITIATION INPUT...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✨ Feature 2: Correction Engine (Gemini Analysis) -->
+    <section id="correction" class="py-16 border-b border-stone-200 bg-stone-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-light mb-2">Structural Correction Engine</h3>
+                <p class="text-stone-500 mono text-sm uppercase">Describe a "Slug" (System Friction) for AI Remediation</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 border border-stone-300 card-shadow space-y-4">
+                    <label class="block mono text-[10px] uppercase text-stone-500">Inventory Friction Input</label>
+                    <textarea id="correction-input" rows="5" class="w-full border border-stone-200 p-4 text-sm focus:outline-none focus:border-amber-500" placeholder="Example: We have $10M in aging inventory that isn't moving, causing a liquidity trap on the showroom floor..."></textarea>
+                    <button id="correction-btn" class="w-full bg-amber-600 text-white py-3 text-xs mono uppercase hover:bg-amber-700 transition-colors">
+                        Apply Orkid Correction ✨
+                    </button>
+                </div>
+                <div id="correction-result" class="bg-stone-900 text-stone-300 p-6 border border-stone-800 mono text-xs leading-loose overflow-y-auto max-h-[300px]">
+                    <span class="text-stone-600">// Waiting for input diagnostics...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulation: 80 bps Calculator -->
+    <section id="simulation" class="bg-[#1A1A1A] text-[#F5F2EB] py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <h3 class="text-3xl font-light text-white mb-6">Structural Rebate Simulation</h3>
+                    <p class="text-stone-400 mb-8 leading-relaxed">The Orkid Chapter defines an 80 basis point structural rebate proven on base. Enter your monthly volume.</p>
+                    <div class="bg-stone-800 p-6 border border-stone-700">
+                         <div class="flex items-center">
+                            <span class="text-xl text-stone-500 mr-2">$</span>
+                            <input type="number" id="input-volume" value="1000000" class="w-full bg-transparent border-b border-stone-600 text-amber-500 py-2 focus:outline-none mono text-2xl">
+                        </div>
+                        <div class="mt-8 space-y-2">
+                            <div class="flex justify-between text-xs mono text-stone-500">
+                                <span>REBATE RECOVERY (80 BPS)</span>
+                                <span id="output-rebate" class="text-white">+$8,000</span>
+                            </div>
+                            <div class="flex justify-between text-xs mono text-stone-500">
+                                <span>ANNUALIZED SYNERGY</span>
+                                <span id="output-annual" class="text-white">+$96,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="calcChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Credibility / Video Proof -->
+    <section id="credibility" class="py-12 bg-amber-50 border-t border-stone-200">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-2xl font-semibold mb-4">Verified by Video ✅</h3>
+            <p class="text-stone-600 mb-4">A technical demonstration by Jacob Cavazos showcasing sub-second reconciliation and forensic audit claims. See the full video and the case study for timestamps, quotes, and reproducible notes.</p>
+            <div class="max-w-3xl mx-auto mb-6">
+                <div class="relative" style="padding-top:56.25%;">
+                    <iframe src="https://www.youtube.com/embed/QdZx1Gk6NY4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                </div>
+
+                <!-- Thumbnails & Captions -->
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 items-start">
+                    <a href="assets/video/clip-hero.mp4" target="_blank" class="group block text-center bg-white border border-stone-200 p-2 rounded-sm hover:shadow-md transition-all">
+                        <img src="assets/video/gif-hero.gif" alt="Hero GIF" class="mx-auto mb-2 w-full h-32 object-cover rounded-sm">
+                        <div class="mono text-xs uppercase font-bold text-stone-800">18x / Sub-second Reconciliation</div>
+                        <div class="text-[10px] text-stone-500">00:00 — Visual proof</div>
+                    </a>
+                    <a href="assets/video/clip-architecture.mp4" target="_blank" class="group block text-center bg-white border border-stone-200 p-2 rounded-sm hover:shadow-md transition-all">
+                        <img src="assets/video/gif-architecture.gif" alt="Architecture GIF" class="mx-auto mb-2 w-full h-32 object-cover rounded-sm">
+                        <div class="mono text-xs uppercase font-bold text-stone-800">Rust Orchestrator — Architecture</div>
+                        <div class="text-[10px] text-stone-500">00:12 — Pipeline visuals</div>
+                    </a>
+                    <a href="assets/video/clip-integration.mp4" target="_blank" class="group block text-center bg-white border border-stone-200 p-2 rounded-sm hover:shadow-md transition-all">
+                        <img src="assets/video/gif-integration.gif" alt="Integration GIF" class="mx-auto mb-2 w-full h-32 object-cover rounded-sm">
+                        <div class="mono text-xs uppercase font-bold text-stone-800">Polygon & Institutional Rails</div>
+                        <div class="text-[10px] text-stone-500">00:22 — Integration demo</div>
+                    </a>
+                </div>
+
+            </div>
+            <a href="docs/case-study.md" class="mono text-xs uppercase text-amber-700 font-bold">Read the Case Study →</a>
+        </div>
+    </section>
+
+    <footer class="bg-stone-200/50 py-12 text-center text-[10px] mono text-stone-500 uppercase tracking-widest border-t border-stone-300">
+        <p>Orkid Labs Inc. // Manual Override Initiated</p>
+        <p class="mt-2">&copy; Restraint As Grace</p>
+    </footer>
+
+    <script>
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'orkid-terminal';
+
+        const state = {
+            charts: {}
+        };
+
+        // --- Gemini API Helpers (server proxy) ---
+        async function callGemini(prompt, systemInstruction = "", isJson = false) {
+            const payload = { prompt, systemInstruction, isJson };
+            try {
+                const response = await fetch('/api/gemini', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error('API Error');
+                const result = await response.json();
+                const raw = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                return isJson ? JSON.parse(raw) : raw;
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+
+        // --- Feature 1: Oracle logic ---
+        const oracleInput = document.getElementById('oracle-input');
+        const oracleBtn = document.getElementById('oracle-btn');
+        const oracleOutput = document.getElementById('oracle-output');
+
+        oracleBtn.addEventListener('click', async () => {
+            const query = oracleInput.value.trim();
+            if (!query) return;
+
+            oracleOutput.innerHTML += `<p class="font-bold text-stone-900 mono uppercase text-xs">User_Query: <span class="font-normal text-stone-600">${query}</span></p>`;
+            oracleInput.value = '';
+            
+            const loadingId = 'loading-' + Date.now();
+            oracleOutput.innerHTML += `<p id="${loadingId}" class="loading-pulse text-amber-600 mono text-xs uppercase">Computing_Diagnostic...</p>`;
+            oracleOutput.scrollTop = oracleOutput.scrollHeight;
+
+            const systemPrompt = "You are the Orkid Labs Oracle, based on the 'Restraint as Grace' report. The report discusses a $4.16T systemic flaw, the Orkid methodology, the $23.1M Conn's case study, and 80bps rebates. Speak with clinical, philosophical, and financial authority. Use terms like 'Day-0 Finality', 'The Seed', and 'Slugs'. Keep responses concise and focused on 'correcting the desync'.";
+            const response = await callGemini(query, systemPrompt);
+            
+            document.getElementById(loadingId).remove();
+            oracleOutput.innerHTML += `<div class="p-3 bg-white border border-stone-200 rounded text-stone-800">${response || "System Desync."}</div>`;
+            oracleOutput.scrollTop = oracleOutput.scrollHeight;
+        });
+
+        // --- Feature 3: Dynamic Mirror Logic ---
+        const mirrorUserInput = document.getElementById('mirror-user-input');
+        const btnMirrorDark = document.getElementById('btn-mirror-dark');
+        const btnMirrorWhite = document.getElementById('btn-mirror-white');
+        const mirrorContainer = document.getElementById('mirror-dynamic-output');
+
+        async function triggerMirror(type) {
+            const input = mirrorUserInput.value.trim() || "System Inertia";
+            mirrorContainer.innerHTML = `<div class="col-span-full py-12 loading-pulse text-stone-400 mono text-sm">// REFLECTING ${type.toUpperCase()} MIRROR...</div>`;
+
+            const systemPrompt = `You are the Soul Mirror from 'Restraint as Grace'. Based on the user's input, generate 3 specific analytical points. 
+            If 'dark', identify the Slugs, systemic waste, and hidden friction. 
+            If 'white', identify the Seed, the path to Day-0 Finality, and structural integrity.
+            Output as JSON: { "reflections": [ { "title": "Uppercase Title", "icon": "emoji", "desc": "Concise 1-sentence analysis" } ] }`;
+            
+            const prompt = `Perform a ${type} mirror audit on: "${input}"`;
+            const data = await callGemini(prompt, systemPrompt, true);
+
+            if (data && data.reflections) {
+                mirrorContainer.innerHTML = '';
+                data.reflections.forEach(item => {
+                    const card = document.createElement('div');
+                    const bgClass = type === 'dark' ? 'bg-red-50 border-red-100' : 'bg-green-50 border-green-100';
+                    const colorClass = type === 'dark' ? 'text-red-700' : 'text-green-700';
+                    card.className = `p-8 rounded card-shadow border ${bgClass} flex flex-col items-center text-center transition-transform hover:-translate-y-1 duration-300`;
+                    card.innerHTML = `
+                        <div class="text-4xl mb-4">${item.icon}</div>
+                        <h4 class="font-bold mono uppercase mb-2 ${colorClass}">${item.title}</h4>
+                        <p class="text-sm text-stone-600 leading-relaxed">${item.desc}</p>
+                    `;
+                    mirrorContainer.appendChild(card);
+                });
+            } else {
+                mirrorContainer.innerHTML = `<div class="col-span-full py-12 text-red-500 mono text-sm uppercase">// REFLECTION_FAILURE: SYSTEM_DESYNC</div>`;
+            }
+        }
+
+        btnMirrorDark.addEventListener('click', () => triggerMirror('dark'));
+        btnMirrorWhite.addEventListener('click', () => triggerMirror('white'));
+
+        // --- Feature 2: Correction Engine logic ---
+        const correctionInput = document.getElementById('correction-input');
+        const correctionBtn = document.getElementById('correction-btn');
+        const correctionResult = document.getElementById('correction-result');
+
+        correctionBtn.addEventListener('click', async () => {
+            const description = correctionInput.value.trim();
+            if (!description) return;
+
+            correctionResult.innerHTML = `<span class="loading-pulse">// ANALYZING MOLECULAR DYNAMICS...</span>`;
+            
+            const systemPrompt = "You are a financial information architect for Orkid Labs. Analyze the user's business friction (Slugs) and explain how the 'Restraint as Grace' methodology (specifically 80bps rebates or Orkid clauses) would solve it. Keep it highly technical, clinical, and transformative. Output in a structured 'Diagnostic Result' format with 'Impact' and 'Resolution' sections.";
+            const response = await callGemini(`Analyze this friction: ${description}`, systemPrompt);
+            
+            correctionResult.innerHTML = `<div class="whitespace-pre-wrap">${response || "Correction Desync."}</div>`;
+        });
+
+        // --- Core UI Logic ---
+        function initCharts() {
+            const ctx1 = document.getElementById('metricsChart').getContext('2d');
+            state.charts.metrics = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Conn\'s Risk', 'Optimized Floor', 'Target Exit'],
+                    datasets: [{
+                        label: 'Millions USD',
+                        data: [23.1, 45, 1500],
+                        backgroundColor: ['#b91c1c', '#d97706', '#15803d'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { type: 'logarithmic', grid: { color: '#e5e7eb' } } }
+                }
+            });
+
+            const ctx2 = document.getElementById('calcChart').getContext('2d');
+            state.charts.calc = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Base Volume', 'Rebate Recovery'],
+                    datasets: [{
+                        data: [1000000, 8000],
+                        backgroundColor: ['#292524', '#d97706'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '80%',
+                    plugins: { legend: { position: 'bottom', labels: { color: '#a8a29e', font: {family: 'Space Mono'} } } }
+                }
+            });
+        }
+
+        function initCalculator() {
+            const input = document.getElementById('input-volume');
+            const outRebate = document.getElementById('output-rebate');
+            const outAnnual = document.getElementById('output-annual');
+
+            function update() {
+                const val = parseFloat(input.value) || 0;
+                const rebate = val * 0.008;
+                outRebate.innerText = `+$${rebate.toLocaleString()}`;
+                outAnnual.innerText = `+$${(rebate * 12).toLocaleString()}`;
+                state.charts.calc.data.datasets[0].data = [val, rebate];
+                state.charts.calc.update();
+            }
+            input.addEventListener('input', update);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            initCalculator();
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        menuBtn.addEventListener('click', () => {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('hidden');
+            nav.classList.toggle('flex-col');
+            nav.classList.toggle('absolute');
+            nav.classList.toggle('top-16');
+            nav.classList.toggle('left-0');
+            nav.classList.toggle('w-full');
+            nav.classList.toggle('bg-white');
+            nav.classList.toggle('p-6');
+            nav.classList.toggle('shadow-xl');
+        });
+    </script>
+</body>
+</html>
